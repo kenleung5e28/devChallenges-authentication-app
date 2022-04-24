@@ -3,7 +3,7 @@ import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndP
 import type { AuthError } from 'firebase/auth'
 import { MouseEventHandler, useState, useEffect } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { Card } from './common/containers/Card'
+import { LoginCard } from './login/components/LoginCard'
 
 const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
@@ -26,7 +26,7 @@ interface LoginFormProps extends FormProps {
 
 function SignUpForm({ onSubmit, onGoLogin }: SignUpFormProps) {
   const { register, handleSubmit } = useForm<UserLoginInfo>()
-  return <Card>
+  return <LoginCard>
     <h2>Join now</h2>
     <form onSubmit={handleSubmit(onSubmit)}>
     <label htmlFor="email">E-mail</label>
@@ -44,12 +44,12 @@ function SignUpForm({ onSubmit, onGoLogin }: SignUpFormProps) {
     <div>
       Already a member? <a href="#" onClick={onGoLogin}>Login</a>
     </div>
-  </Card>
+  </LoginCard>
 }
 
 function LoginForm({ onSubmit, onGoSignUp }: LoginFormProps) {
   const { register, handleSubmit } = useForm<UserLoginInfo>()
-  return <Card>
+  return <LoginCard>
     <h2>Login</h2>
     <form onSubmit={handleSubmit(onSubmit)}>
       <label htmlFor="email">E-mail</label>
@@ -67,7 +67,7 @@ function LoginForm({ onSubmit, onGoSignUp }: LoginFormProps) {
     <div>
       Don't have an account yet? <a href="#" onClick={onGoSignUp}>Register</a>
     </div>
-  </Card>
+  </LoginCard>
 }
 
 interface UserInfoDisplayProps {
