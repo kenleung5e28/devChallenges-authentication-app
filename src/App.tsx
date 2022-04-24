@@ -1,7 +1,7 @@
 import { auth } from './firebase'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User } from 'firebase/auth'
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, User } from 'firebase/auth'
 import type { AuthError } from 'firebase/auth'
-import { MouseEventHandler, useState } from 'react'
+import { MouseEventHandler, useState, useEffect } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 
 const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -84,26 +84,38 @@ function UserInfoDisplay({ displayName, email, photoURL } : UserInfoDisplayProps
 
 export default function App() {
   const [pageMode, setPageMode] = useState<'signUp' | 'login'>('signUp')
+  const [loading, setLoading] = useState<boolean>(true)
+  const [user, setUser] = useState<User | null>(null)
   const [message, setMessage] = useState<string | null>(null)
-  const [user, setUser] = useState<User | null>(auth.currentUser)
   const onSignUp: SubmitHandler<UserLoginInfo> = async info => {
     try {
+      setLoading(true)
       const credential = await createUserWithEmailAndPassword(auth, info.email, info.password)
       setUser(credential.user)
       setMessage(null)
     } catch (err) {
       setMessage((err as AuthError).message)
+    } finally {
+      setLoading(false)
     }
   }
   const onLogin: SubmitHandler<UserLoginInfo> = async info => {
     try {
+      setLoading(true)
       const credential = await signInWithEmailAndPassword(auth, info.email, info.password)
       setUser(credential.user)
       setMessage(null)
     } catch (err) {
       setMessage((err as AuthError).message)
+    } finally {
+      setLoading(false)
     }
   }
+
+  useEffect(() => onAuthStateChanged(auth, user => {
+    setUser(user)
+    setLoading(false)
+  }), [auth])
 
   if (user) {
     return <div>
@@ -121,6 +133,7 @@ export default function App() {
     <div style={{color: 'red'}}>
       {message}
     </div>
+    <div>{loading ? 'Loading...' : ''}</div>
   </div>
 
 }
