@@ -3,7 +3,7 @@ import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndP
 import type { AuthError } from 'firebase/auth'
 import { MouseEventHandler, useState, useEffect } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { LoginCard } from './login/components/LoginCard'
+import LoginCard from '@/login/components/LoginCard'
 
 const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
