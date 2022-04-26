@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const Container = styled.div`
+const Wrapper = styled.div`
   margin-top: 12px;
   font-size: 0.875rem;
   color: #828282;
@@ -18,12 +18,12 @@ const UserLink = styled.a`
 `
 
 const CopyrightDeclaration: React.FC = () => (
-  <Container>
+  <Wrapper>
     <span>
       created by <UserLink href="https://github.com/kenleung5e28">Ken Leung</UserLink>
     </span>
     <span>devChallenges.io</span>
-  </Container>
+  </Wrapper>
 )
 
 export default CopyrightDeclaration

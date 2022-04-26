@@ -8,7 +8,7 @@ import type { UserLoginInfo } from '@/login/types'
 
 const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
-const Container = styled.div`
+const Wrapper = styled.div`
   width: 474px;
 `
 
@@ -41,7 +41,7 @@ export interface LoginFormProps {
 
 const LoginForm: React.FC<LoginFormProps> = ({ title, description, submitText, alternative, onSubmit }) => {
   const { register, handleSubmit } = useForm<UserLoginInfo>()
-  return <Container>
+  return <Wrapper>
     <Card>
       <h2>{title}</h2>
       {description && <p>{description}</p>}
@@ -59,7 +59,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ title, description, submitText, a
       {alternative}
     </Card>
     <CopyrightDeclaration />
-  </Container>
+  </Wrapper>
 }
 
 export default LoginForm
