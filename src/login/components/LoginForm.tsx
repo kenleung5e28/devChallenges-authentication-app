@@ -1,12 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import { MouseEventHandler } from 'react'
-import { useForm, SubmitHandler, UseFormRegister } from 'react-hook-form'
-import { TextInput } from '@/login/components'
+// import { MouseEventHandler } from 'react'
+import { useForm, SubmitHandler, FormProvider } from 'react-hook-form'
+import { EmailInput, PasswordInput } from '@/login/components'
 import { CopyrightDeclaration } from '@/common/components'
 import type { UserLoginInfo } from '@/login/types'
-
-const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
 const ComponentWrapper = styled.div`
   color: #BDBDBD;
@@ -22,19 +20,6 @@ const CenterWrapper = styled.div`
   text-align: center;
 `
 
-const EmailInput = React.forwardRef<
-  ReturnType<UseFormRegister<UserLoginInfo>>
->(() => (
-  <TextInput label="Email" />
-))
-
-const PasswordInput = React.forwardRef<
-ReturnType<UseFormRegister<UserLoginInfo>>
->(() => (
-  <TextInput label="Password" isPassword />
-))
-
-
 export interface LoginFormProps {
   title: string,
   description?: string,
@@ -44,22 +29,18 @@ export interface LoginFormProps {
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({ title, description, submitText, alternative, onSubmit }) => {
-  const { register, handleSubmit } = useForm<UserLoginInfo>()
+  const formMethods = useForm<UserLoginInfo>()
   return <ComponentWrapper>
     <Card>
       <h3>{title}</h3>
       {description && <p>{description}</p>}
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <EmailInput {...register('email', {
-          required: true,
-          pattern: EMAIL_REGEX,
-        })} />
-        <PasswordInput {...register('password', {
-          required: true,
-          minLength: 8,
-        })} />
-        <input type="submit" value={submitText} />
-      </form>
+      <FormProvider {...formMethods}>
+        <form onSubmit={formMethods.handleSubmit(onSubmit)}>
+          <EmailInput name="email" />
+          <PasswordInput name="password" />
+          <input type="submit" value={submitText} />
+        </form>
+      </FormProvider>
       <CenterWrapper>or continue with these social profile</CenterWrapper>
       <CenterWrapper>SOCIAL PROFILE LOGIN ICONS</CenterWrapper>
       {alternative}

@@ -81,8 +81,19 @@ export default function App() {
     </div>
   }
 
+    // try {
+    //   setLoading(true)
+    //   const credential = await createUserWithEmailAndPassword(auth, info.email, info.password)
+    //   setUser(credential.user)
+    //   setMessage(null)
+    // } catch (err) {
+    //   setMessage((err as AuthError).message)
+    // } finally {
+    //   setLoading(false)
+    // }
+
   return <div>
-    {pageMode === 'signUp' && <SignUp />}
+    {pageMode === 'signUp' && <SignUp onSubmit={data => console.log(data)} />}
     {/* pageMode === 'login' && <LoginForm onSubmit={onLogin} onGoSignUp={() => setPageMode('signUp')} /> */}
     <div style={{color: 'red'}}>
       {message}

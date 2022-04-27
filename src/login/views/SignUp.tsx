@@ -7,28 +7,16 @@ const Wrapper = styled.div`
   margin: 197px auto;
 `
 
-const SignUp: React.FC = () => {
-  const onSignUp: LoginFormProps['onSubmit'] = async info => {
-    // try {
-    //   setLoading(true)
-    //   const credential = await createUserWithEmailAndPassword(auth, info.email, info.password)
-    //   setUser(credential.user)
-    //   setMessage(null)
-    // } catch (err) {
-    //   setMessage((err as AuthError).message)
-    // } finally {
-    //   setLoading(false)
-    // }
-  }
-  return <Wrapper>
+const SignUp: React.FC<Pick<LoginFormProps, 'onSubmit'>> = ({ onSubmit }) => (
+  <Wrapper>
     <LoginForm 
       title="Join thousands of learners from around the world" 
       description="Master web development by making real-life projects. There are multiple paths for you to choose"
       submitText="Start coding now"
       alternative={<div>Already a member? <a href="#">Login</a></div>}
-      onSubmit={onSignUp}
+      onSubmit={onSubmit}
     />
   </Wrapper>
-}
+)
 
 export default SignUp
