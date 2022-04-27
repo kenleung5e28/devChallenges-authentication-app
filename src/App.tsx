@@ -3,38 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import { auth } from './firebase'
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, User } from 'firebase/auth'
 import type { AuthError } from 'firebase/auth'
-import { useForm, SubmitHandler } from 'react-hook-form'
-import { SignUp, Login } from '@/login/views'
-
-/*
-interface LoginFormProps {
-  onSubmit: SubmitHandler<UserLoginInfo>
-  onGoSignUp: MouseEventHandler<HTMLAnchorElement>
-}
-
-function LoginForm({ onSubmit, onGoSignUp }: LoginFormProps) {
-  const { register, handleSubmit } = useForm<UserLoginInfo>()
-  return <LoginForm>
-    <h2>Login</h2>
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <label htmlFor="email">E-mail</label>
-      <input {...register('email', {
-        required: true,
-        pattern: EMAIL_REGEX,
-      })} />
-      <label htmlFor="password">Password</label>
-      <input type="password" {...register('password', {
-        required: true,
-        minLength: 8,
-      })} />
-      <input type="submit" value="Login" />
-    </form>
-    <div>
-      Don't have an account yet? <a href="#" onClick={onGoSignUp}>Register</a>
-    </div>
-  </LoginForm>
-}
-*/
+import { SignUp, Login, UserProfile } from '@/login/views'
 
 export default function App() {
   const [loading, setLoading] = useState<boolean>(true)
@@ -58,15 +27,14 @@ export default function App() {
     setLoading(false)
   }), [auth])
 
-  if (user) {
-    return <div>
-      <h1>Welcome!</h1>
-      <UserInfoDisplay {...user} />
-      <div>
-        <button onClick={() => signOut(auth)}>Logout</button>
-      </div>
-    </div>
-  }
+  // if (user) {
+  //   return <div>
+  //     <h1>Welcome!</h1>
+  //     <div>
+  //       <button onClick={() => signOut(auth)}>Logout</button>
+  //     </div>
+  //   </div>
+  // }
 
     // try {
     //   setLoading(true)
