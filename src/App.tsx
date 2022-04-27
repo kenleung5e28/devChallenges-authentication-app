@@ -1,9 +1,10 @@
+import { MouseEventHandler, useState, useEffect } from 'react'
+import { Routes, Route } from 'react-router-dom'
 import { auth } from './firebase'
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, User } from 'firebase/auth'
 import type { AuthError } from 'firebase/auth'
-import { MouseEventHandler, useState, useEffect } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import SignUp from '@/login/views/SignUp'
+import { SignUp, Login } from '@/login/views'
 
 /*
 interface LoginFormProps {
@@ -49,7 +50,6 @@ function UserInfoDisplay({ displayName, email, photoURL } : UserInfoDisplayProps
 }
 
 export default function App() {
-  const [pageMode, setPageMode] = useState<'signUp' | 'login'>('signUp')
   const [loading, setLoading] = useState<boolean>(true)
   const [user, setUser] = useState<User | null>(null)
   const [message, setMessage] = useState<string | null>(null)
@@ -93,12 +93,11 @@ export default function App() {
     // }
 
   return <div>
-    {pageMode === 'signUp' && <SignUp onSubmit={data => console.log(data)} />}
-    {/* pageMode === 'login' && <LoginForm onSubmit={onLogin} onGoSignUp={() => setPageMode('signUp')} /> */}
-    <div style={{color: 'red'}}>
-      {message}
-    </div>
     <div>{loading ? 'Loading...' : ''}</div>
+    <Routes>
+      <Route path="/" element={<SignUp onSubmit={data => console.log(data)} />} />
+      <Route path="/login" element={<Login onSubmit={data => console.log(data)} />} />
+    </Routes>
   </div>
 
 }
