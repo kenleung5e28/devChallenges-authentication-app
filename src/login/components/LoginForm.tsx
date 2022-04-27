@@ -16,7 +16,7 @@ const Card = styled.div`
   padding: 53px 58px 43px 58px;
 `
 
-const CenterWrapper = styled.div`
+const Centering = styled.div`
   text-align: center;
 `
 
@@ -41,8 +41,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ title, description, submitText, a
           <input type="submit" value={submitText} />
         </form>
       </FormProvider>
-      <CenterWrapper>or continue with these social profile</CenterWrapper>
-      <CenterWrapper>SOCIAL PROFILE LOGIN ICONS</CenterWrapper>
+      <Centering>or continue with these social profile</Centering>
+      <Centering>SOCIAL PROFILE LOGIN ICONS</Centering>
       {alternative}
     </Card>
     <CopyrightDeclaration />
