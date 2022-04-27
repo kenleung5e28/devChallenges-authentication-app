@@ -43,7 +43,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ title, description, submitText, a
       </FormProvider>
       <Centering>or continue with these social profile</Centering>
       <Centering>SOCIAL PROFILE LOGIN ICONS</Centering>
-      {alternative}
+      <Centering>{alternative}</Centering>
     </Card>
     <CopyrightDeclaration />
   </ComponentWrapper>
