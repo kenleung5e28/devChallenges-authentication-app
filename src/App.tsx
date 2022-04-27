@@ -36,19 +36,6 @@ function LoginForm({ onSubmit, onGoSignUp }: LoginFormProps) {
 }
 */
 
-interface UserInfoDisplayProps {
-  displayName: string | null,
-  email: string | null,
-  photoURL: string | null,
-}
-
-function UserInfoDisplay({ displayName, email, photoURL } : UserInfoDisplayProps) {
-  return <div>
-    <h3>{displayName ?? 'N/A'}{email ? `<${email}>`: ''}</h3>
-    {photoURL && <img src={photoURL}></img>}
-  </div>
-}
-
 export default function App() {
   const [loading, setLoading] = useState<boolean>(true)
   const [user, setUser] = useState<User | null>(null)
@@ -97,6 +84,7 @@ export default function App() {
     <Routes>
       <Route path="/" element={<SignUp onSubmit={data => console.log(data)} />} />
       <Route path="/login" element={<Login onSubmit={data => console.log(data)} />} />
+      <Route path="/profile" element={<UserProfile />} />
     </Routes>
   </div>
 
