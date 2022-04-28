@@ -1,7 +1,21 @@
 import { Link } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
+import { SubmitHandler } from 'react-hook-form';
+import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { LoginForm, LoginViewWrapper } from '@/login/components';
+import { auth } from '@/firebase';
+import type { UserLoginInfo } from '@/login/types';
 
 const SignUp: React.FC = () => {
+  const [createUserWithEmailAndPassword, user, loading, error] = useCreateUserWithEmailAndPassword(auth);
+  const onSubmit: SubmitHandler<UserLoginInfo> = async ({ email, password }) => {
+    await createUserWithEmailAndPassword(email, password);
+  };
+
+  if (!loading && !error && user) {
+    return <Navigate to="/profile" />;
+  }
+
   return (
     <LoginViewWrapper>
       <LoginForm
@@ -13,7 +27,9 @@ const SignUp: React.FC = () => {
             Already a member? <Link to="/login">Login</Link>
           </div>
         }
-        onSubmit={() => {}}
+        loading={loading}
+        error={error && `Failed to register: ${error.message}`}
+        onSubmit={onSubmit}
       />
     </LoginViewWrapper>
   );
