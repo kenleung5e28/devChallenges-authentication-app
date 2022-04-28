@@ -1,7 +1,7 @@
 export interface UserProfileProps {
-  displayName: string | null,
-  email: string | null,
-  photoURL: string | null,
+  displayName?: string | null,
+  email?: string | null,
+  photoURL?: string | null,
 }
 
 const UserProfile: React.FC<UserProfileProps> = ({ displayName, email, photoURL }) => (
