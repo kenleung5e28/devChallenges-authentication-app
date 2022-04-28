@@ -18,8 +18,6 @@ const Login: React.FC = () => {
 
   return (
     <LoginViewWrapper>
-      {loading && <div>Loading...</div>}
-      {error && <div>Error: {error.message}</div>}
       <LoginForm
         title="Login"
         submitText="Login"
@@ -28,6 +26,8 @@ const Login: React.FC = () => {
             Don't have an account yet? <Link to="/">Register</Link>
           </div>
         }
+        loading={loading}
+        error={error && `Login failed: ${error.message}`}
         onSubmit={onSubmit}
       />
     </LoginViewWrapper>
