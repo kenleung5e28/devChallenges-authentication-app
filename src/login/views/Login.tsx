@@ -1,21 +1,18 @@
-import styled from 'styled-components'
-import { LoginForm } from '@/login/components'
-import type { LoginFormProps } from '../components/LoginForm'
-
-const Wrapper = styled.div`
-  width: 474px;
-  margin: 197px auto;
-`
+import { Link } from 'react-router-dom'
+import { LoginForm, LoginViewWrapper } from '@/login/components'
+import type { LoginFormProps } from '@/login/components/LoginForm'
 
 const Login: React.FC<Pick<LoginFormProps, 'onSubmit'>> = ({ onSubmit }) => (
-  <Wrapper>
+  <LoginViewWrapper>
     <LoginForm 
       title="Login" 
       submitText="Login"
-      alternative={<div>Don't have an account yet? <a href="#">Register</a></div>}
+      alternative={<div>
+        Don't have an account yet? <Link to="/">Register</Link>
+      </div>}
       onSubmit={onSubmit}
     />
-  </Wrapper>
+  </LoginViewWrapper>
 )
 
 export default Login
