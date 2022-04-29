@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 // import { MouseEventHandler } from 'react'
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
-import { EmailInput, PasswordInput } from '@/login/components';
+import { EmailInput, PasswordInput, IconButton } from '@/login/components';
 import { CopyrightDeclaration } from '@/common/components';
 import type { UserLoginInfo } from '@/login/types';
 
@@ -59,7 +59,10 @@ const LoginForm: React.FC<LoginFormProps> = ({
           </form>
         </FormProvider>
         <Centering>or continue with these social profile</Centering>
-        <Centering>SOCIAL PROFILE LOGIN ICONS</Centering>
+        <Centering>
+          <IconButton profile="google" />
+          <IconButton profile="github" />
+        </Centering>
         <Centering>{alternative}</Centering>
       </Card>
       <CopyrightDeclaration />

@@ -1,5 +1,4 @@
-import type { UserLoginInfo } from "./UserLoginInfo"
+import type { UserLoginInfo } from './UserLoginInfo';
+import type { SocialProfileProvider } from './SocialProfileProvider';
 
-export {
-  UserLoginInfo
-}
+export { UserLoginInfo, SocialProfileProvider };
