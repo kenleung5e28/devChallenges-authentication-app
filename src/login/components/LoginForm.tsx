@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 // import { MouseEventHandler } from 'react'
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
-import { EmailInput, PasswordInput, IconButton } from '@/login/components';
+import { EmailInput, PasswordInput, SocialProfileButton } from '@/login/components';
 import { CopyrightDeclaration } from '@/common/components';
-import type { UserLoginInfo } from '@/login/types';
+import type { UserLoginInfo, SocialProfileProvider } from '@/login/types';
 
 const ComponentWrapper = styled.div`
   color: #bdbdbd;
@@ -32,6 +32,7 @@ export interface LoginFormProps {
   loading?: boolean;
   error?: string;
   onSubmit: SubmitHandler<UserLoginInfo>;
+  onSocialSignIn: (provider: SocialProfileProvider) => void;
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({
@@ -42,6 +43,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
   loading,
   error,
   onSubmit,
+  onSocialSignIn,
 }) => {
   const formMethods = useForm<UserLoginInfo>();
   return (
@@ -60,8 +62,8 @@ const LoginForm: React.FC<LoginFormProps> = ({
         </FormProvider>
         <Centering>or continue with these social profile</Centering>
         <Centering>
-          <IconButton profile="google" />
-          <IconButton profile="github" />
+          <SocialProfileButton profile="google" onClick={() => onSocialSignIn('google')} />
+          <SocialProfileButton profile="github" onClick={() => onSocialSignIn('github')} />
         </Centering>
         <Centering>{alternative}</Centering>
       </Card>

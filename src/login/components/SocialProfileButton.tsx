@@ -4,7 +4,7 @@ import { SocialProfileProvider } from '@/login/types';
 import GithubIcon from '@/login/icons/github.svg';
 import GoogleIcon from '@/login/icons/google.svg';
 
-export interface IconButtonProps {
+export interface SocialProfileButtonProps {
   profile: SocialProfileProvider;
   onClick?: MouseEventHandler<HTMLSpanElement>;
 }
@@ -26,7 +26,7 @@ const icons: Record<SocialProfileProvider, string> = {
   google: GoogleIcon,
 };
 
-const IconButton: React.FC<IconButtonProps> = ({ profile, onClick }) => {
+const SocialProfileButton: React.FC<SocialProfileButtonProps> = ({ profile, onClick }) => {
   return (
     <Wrapper onClick={onClick}>
       <img src={icons[profile]} alt={profile} />
@@ -34,4 +34,4 @@ const IconButton: React.FC<IconButtonProps> = ({ profile, onClick }) => {
   );
 };
 
-export default IconButton;
+export default SocialProfileButton;

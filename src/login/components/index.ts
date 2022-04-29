@@ -3,7 +3,7 @@ import TextInput from './TextInput';
 import EmailInput from './EmailInput';
 import PasswordInput from './PasswordInput';
 import LoginViewWrapper from './LoginViewWrapper';
-import IconButton from './IconButton';
+import SocialProfileButton from './SocialProfileButton';
 import type { LoginFormProps } from './LoginForm';
 import type { TextInputProps } from './TextInput';
 
@@ -13,7 +13,7 @@ export {
   EmailInput,
   PasswordInput,
   LoginViewWrapper,
-  IconButton,
+  SocialProfileButton,
   LoginFormProps,
   TextInputProps,
 };

@@ -11,6 +11,7 @@ const Login: React.FC = () => {
   const onSubmit: SubmitHandler<UserLoginInfo> = async ({ email, password }) => {
     await signInWithEmailAndPassword(email, password);
   };
+  const onSocialSignIn = (provider) => {};
 
   if (!loading && !error && user) {
     return <Navigate to="/profile" />;
@@ -29,6 +30,7 @@ const Login: React.FC = () => {
         loading={loading}
         error={error && `Login failed: ${error.message}`}
         onSubmit={onSubmit}
+        onSocialSignIn={onSocialSignIn}
       />
     </LoginViewWrapper>
   );
