@@ -56,13 +56,13 @@ const handleRedirect = async () => {
           return undefined;
         } else {
           //const Provider = getProviderConstructorById(methods[0]);
-          const credential = GithubProvider.credentialFromError(error);
-          if (!credential) {
-            throw new Error(`Cannot obtain credential from provider "${method}"`);
-          }
-          const signInResult = await signInWithCredential(auth, credential);
-          const linkResult = await linkWithCredential(signInResult.user, credential);
-          return linkResult.user;
+          // const credential = Provider.credentialFromError(error);
+          // if (!credential) {
+          //   throw new Error(`Cannot obtain credential from provider "${method}"`);
+          // }
+          // const signInResult = await signInWithCredential(auth, credential);
+          // const linkResult = await linkWithCredential(signInResult.user, credential);
+          // return linkResult.user;
         }
       }
     }
