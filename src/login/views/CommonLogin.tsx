@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SubmitHandler } from 'react-hook-form';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { LoginForm, LoginViewWrapper } from '@/login/components';
 import { auth } from '@/firebase';
 import { signInByOAuth } from '@/auth';
@@ -16,40 +17,37 @@ export type CommonLoginProps = Pick<LoginFormProps, 'title' | 'description' | 's
 
 const CommonLogin: React.FC<CommonLoginProps> = ({ submitAction, ...props }) => {
   const naviagate = useNavigate();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<FirebaseError | null>(null);
+  const [user, loading, error] = useAuthState(auth);
   const onSubmit: SubmitHandler<UserLoginInfo> = async ({ email, password }) => {
     try {
-      setLoading(true);
-      setError(null);
       const signInOrCreateUserWithEmailAndPassword =
         submitAction === 'login' ? signInWithEmailAndPassword : createUserWithEmailAndPassword;
       await signInOrCreateUserWithEmailAndPassword(auth, email, password);
     } catch (error) {
-      setError(error as FirebaseError);
-      setLoading(false);
+      // setError(error as FirebaseError);
     }
   };
   const onSocialSignIn = async (provider: OAuthProviderName) => {
     try {
-      setLoading(true);
-      setError(null);
       await signInByOAuth(provider);
     } catch (error) {
-      setLoading(false);
-      setError(error as FirebaseError);
+      // setError(error as FirebaseError);
     }
   };
 
-  useEffect(
-    () =>
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          naviagate('/profile');
-        }
-      }),
-    []
-  );
+  useEffect(() => {
+    if (user) {
+      naviagate('/profile');
+    }
+  }, [user]);
+
+  if (loading) {
+    return (
+      <div>
+        <h2>Loading...</h2>
+      </div>
+    );
+  }
 
   return (
     <LoginViewWrapper>
