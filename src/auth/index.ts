@@ -1,12 +1,13 @@
 import { auth } from '@/firebase';
 import { FirebaseError } from 'firebase/app';
 import {
+  AuthError,
   GithubAuthProvider,
   GoogleAuthProvider,
-  signInWithRedirect,
   signInWithCredential,
   linkWithCredential,
   getRedirectResult,
+  fetchSignInMethodsForEmail,
 } from 'firebase/auth';
 
 // Facebook and Twitter are not included at this moment
@@ -18,27 +19,55 @@ const oAuthProviders: Record<OAuthProviderName, typeof GithubAuthProvider | type
   github: GithubAuthProvider,
 };
 
-const signInByOAuth = async (method: OAuthProviderName) => {
-  const Provider = oAuthProviders[method];
+const getProvider = (name: OAuthProviderName) => {
+  switch (name) {
+    case 'google':
+      return new GoogleAuthProvider();
+    case 'github':
+      return new GithubAuthProvider();
+    default:
+      throw new Error(`Unknown provider name ${name}`);
+  }
+};
+
+const getProviderConstructorById = (id: string) => {
+  switch (id) {
+    case GoogleAuthProvider.PROVIDER_ID:
+      return GoogleAuthProvider;
+    case GithubAuthProvider.PROVIDER_ID:
+      return GithubAuthProvider;
+    default:
+      throw new Error(`Unknown provider id ${id}`);
+  }
+};
+
+const handleRedirect = async () => {
   try {
-    await signInWithRedirect(auth, new Provider());
+    console.log('Handle redirect...');
     const result = await getRedirectResult(auth);
-    if (!result) {
-      throw new Error(`Failed to sign in from provider "${method}"`);
-    }
-    return result.user;
+    return result?.user;
   } catch (error) {
     if (error instanceof FirebaseError && error.code === 'auth/account-exists-with-different-credential') {
-      const credential = Provider.credentialFromError(error);
-      if (!credential) {
-        throw new Error(`Cannot obtain credential from provider "${method}"`);
+      if (error.customData && error.customData['email']) {
+        const email = error.customData['email'] as string;
+        const methods = await fetchSignInMethodsForEmail(auth, email);
+        if (methods[0] === 'password') {
+          console.log('registered with email and password');
+          return undefined;
+        } else {
+          //const Provider = getProviderConstructorById(methods[0]);
+          const credential = GithubProvider.credentialFromError(error);
+          if (!credential) {
+            throw new Error(`Cannot obtain credential from provider "${method}"`);
+          }
+          const signInResult = await signInWithCredential(auth, credential);
+          const linkResult = await linkWithCredential(signInResult.user, credential);
+          return linkResult.user;
+        }
       }
-      const signInResult = await signInWithCredential(auth, credential);
-      const linkResult = await linkWithCredential(signInResult.user, credential);
-      return linkResult.user;
     }
     throw error;
   }
 };
 
-export { signInByOAuth };
+export { handleRedirect, getProvider, getProviderConstructorById };

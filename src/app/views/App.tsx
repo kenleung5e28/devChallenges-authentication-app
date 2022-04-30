@@ -1,14 +1,4 @@
-import { MouseEventHandler, useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import {
-  createUserWithEmailAndPassword,
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  signOut,
-  User,
-} from 'firebase/auth';
-import type { AuthError } from 'firebase/auth';
-import { auth } from '@/firebase';
 import { RequireAuth } from '@/app/components';
 import { SignUp, Login } from '@/login/views';
 import { UserProfile } from '@/profile/views';

@@ -8,7 +8,7 @@ const Login: React.FC = () => (
     submitAction="login"
     alternative={
       <div>
-        Don't have an account yet? <Link to="/">Register</Link>
+        Don't have an account yet? <Link to="/signup">Register</Link>
       </div>
     }
   />
