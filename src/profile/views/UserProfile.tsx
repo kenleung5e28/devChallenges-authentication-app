@@ -1,5 +1,6 @@
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/firebase';
+import { signOut } from 'firebase/auth';
 
 const UserProfile: React.FC = () => {
   const [user, loading, error] = useAuthState(auth);
@@ -27,7 +28,10 @@ const UserProfile: React.FC = () => {
         {user?.displayName ?? 'N/A'}
         {user?.email ? `<${user.email}>` : ''}
       </h3>
-      {user?.photoURL && <img src={user.photoURL}></img>}
+      <div>{user?.photoURL && <img src={user.photoURL}></img>}</div>
+      <a href="#" onClick={() => signOut(auth)}>
+        Sign out
+      </a>
     </div>
   );
 };

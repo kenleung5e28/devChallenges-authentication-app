@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { EmailInput, PasswordInput, SocialProfileButton } from '@/login/components';
 import { CopyrightDeclaration } from '@/common/components';
-import type { UserLoginInfo, SocialProfileProvider } from '@/login/types';
+import type { UserLoginInfo } from '@/login/types';
+import type { OAuthProviderName } from '@/auth';
 
 const ComponentWrapper = styled.div`
   color: #bdbdbd;
@@ -32,7 +33,7 @@ export interface LoginFormProps {
   loading?: boolean;
   error?: string;
   onSubmit: SubmitHandler<UserLoginInfo>;
-  onSocialSignIn: (provider: SocialProfileProvider) => void;
+  onSocialSignIn: (provider: OAuthProviderName) => Promise<void>;
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({
