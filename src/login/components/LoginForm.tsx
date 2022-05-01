@@ -5,7 +5,7 @@ import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { EmailInput, PasswordInput, SocialProfileButton } from '@/login/components';
 import { CopyrightDeclaration } from '@/common/components';
 import type { UserLoginInfo } from '@/login/types';
-import type { OAuthProviderName } from '@/auth';
+import type { OAuthProviderName } from '@/login/types';
 
 const ComponentWrapper = styled.div`
   color: #bdbdbd;

@@ -4,10 +4,10 @@ import { SubmitHandler } from 'react-hook-form';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { LoginForm, LoginViewWrapper } from '@/login/components';
 import { auth } from '@/firebase';
-import { getProvider, handleRedirect } from '@/auth';
+import { handleSignIn, handleRedirect } from '@/login/utils';
 import type { UserLoginInfo } from '@/login/types';
 import type { LoginFormProps } from '@/login/components';
-import type { OAuthProviderName } from '@/auth';
+import type { OAuthProviderName } from '@/login/types';
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -30,15 +30,16 @@ const CommonLogin: React.FC<CommonLoginProps> = ({ submitAction, ...props }) => 
     await signInOrCreateUserWithEmailAndPassword(auth, email, password);
   };
   const onSocialSignIn = async (name: OAuthProviderName) => {
-    await signInWithRedirect(auth, getProvider(name));
+    await handleSignIn(name);
   };
 
-  useEffect(() => {
-    (async () => await handleRedirect())();
-    if (user) {
-      naviagate('/profile');
-    }
-  }, [user]);
+  useEffect(
+    () =>
+      onAuthStateChanged(auth, async () => {
+        await handleRedirect(naviagate);
+      }),
+    []
+  );
 
   if (loading) {
     return (

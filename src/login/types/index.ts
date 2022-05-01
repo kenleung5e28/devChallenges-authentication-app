@@ -1,4 +1,8 @@
-import type { UserLoginInfo } from './UserLoginInfo';
-import type { SocialProfileProvider } from './SocialProfileProvider';
+export interface UserLoginInfo {
+  email: string;
+  password: string;
+}
 
-export { UserLoginInfo, SocialProfileProvider };
+// Facebook and Twitter are not included at this moment
+export type OAuthProviderName = 'google' | 'github';
+export type AuthMethod = 'email' | OAuthProviderName;
