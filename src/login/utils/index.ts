@@ -52,17 +52,20 @@ const handleRedirect = async (navigate: NavigateFunction) => {
     console.log('Handle redirect...');
     const result = await getRedirectResult(auth);
     if (!result) {
+      // User not logged in, redirect to home
       navigate('/');
       return;
     }
     const sessionState = sessionStorage.getItem(AUTH_STATE);
     if (sessionState === AUTH_SESSION_STATES.SIGN_IN) {
-      console.log('Handle sign in...');
+      // User logged in successful in OAuth sign in page, redirect to user profile
+      console.log('User signed in');
       sessionStorage.removeItem(AUTH_STATE);
       navigate('/profile');
       return;
     }
     if (sessionState === AUTH_SESSION_STATES.LINK) {
+      // User logged in through OAuth sign in page for linking, proceed to link existing user account
       console.log('Handle account linking...');
       const credentialValue = sessionStorage.getItem(AUTH_CREDENTIAL);
       if (!credentialValue) {
@@ -77,8 +80,9 @@ const handleRedirect = async (navigate: NavigateFunction) => {
     }
   } catch (error) {
     if (error instanceof FirebaseError && error.code === 'auth/account-exists-with-different-credential') {
+      // User already registered with another login method, proceed to start linking by first let user logs in with that method
       if (typeof error.customData?.['email'] === 'string') {
-        console.log('Account exists, start linking');
+        console.log('Account exists, start linking...');
         const credential = OAuthProvider.credentialFromError(error);
         if (!credential) {
           throw new Error('Cannot obtain credential from OAuth provider');
@@ -94,9 +98,12 @@ const handleRedirect = async (navigate: NavigateFunction) => {
           console.log('registered with email and password');
           // TODO
         } else {
-          console.log(`registered with OAuth ${method}`);
+          console.log(`registered with OAuth ${method}, redirect...`);
           signInWithRedirect(auth, getProviderById(method));
         }
+        return;
+      } else {
+        console.log('Cannot find email in error.customData');
       }
     }
     throw error;
