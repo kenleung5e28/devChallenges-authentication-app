@@ -41,6 +41,8 @@ const getProviderById = (id: string) => {
   }
 };
 
+const isHandlingAuth = () => !!sessionStorage.getItem(AUTH_STATE);
+
 const handleSignIn = async (name: OAuthProviderName) => {
   console.log(`Handle sign in with ${name}...`);
   sessionStorage.setItem(AUTH_STATE, AUTH_SESSION_STATES.SIGN_IN);
@@ -110,4 +112,4 @@ const handleRedirect = async (navigate: NavigateFunction) => {
   }
 };
 
-export { handleSignIn, handleRedirect };
+export { handleSignIn, handleRedirect, isHandlingAuth };

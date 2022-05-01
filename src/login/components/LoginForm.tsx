@@ -33,7 +33,7 @@ export interface LoginFormProps {
   loading?: boolean;
   error?: string;
   onSubmit: SubmitHandler<UserLoginInfo>;
-  onSocialSignIn: (provider: OAuthProviderName) => Promise<void>;
+  onSocialSignIn?: (provider: OAuthProviderName) => Promise<void>;
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({
@@ -61,12 +61,16 @@ const LoginForm: React.FC<LoginFormProps> = ({
             <input type="submit" value={submitText} />
           </form>
         </FormProvider>
-        <Centering>or continue with these social profile</Centering>
-        <Centering>
-          <SocialProfileButton profile="google" onClick={() => onSocialSignIn('google')} />
-          <SocialProfileButton profile="github" onClick={() => onSocialSignIn('github')} />
-        </Centering>
-        <Centering>{alternative}</Centering>
+        {onSocialSignIn && (
+          <Centering>
+            <div>or continue with these social profile</div>
+            <div>
+              <SocialProfileButton profile="google" onClick={() => onSocialSignIn('google')} />
+              <SocialProfileButton profile="github" onClick={() => onSocialSignIn('github')} />
+            </div>
+            <div>{alternative}</div>
+          </Centering>
+        )}
       </Card>
       <CopyrightDeclaration />
     </ComponentWrapper>
