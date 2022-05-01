@@ -103,7 +103,7 @@ const handleRedirect = async (navigate: NavigateFunction) => {
         }
         return;
       } else {
-        console.log('Cannot find email in error.customData');
+        throw new Error('Cannot find email in the existing user account record');
       }
     }
     throw error;

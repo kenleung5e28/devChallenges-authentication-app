@@ -24,19 +24,14 @@ const CommonLogin: React.FC<CommonLoginProps> = ({ submitAction, ...props }) => 
     await handleSignIn(name);
   };
 
-  useEffect(
-    () =>
-      onAuthStateChanged(auth, async (_user) => {
-        await handleRedirect(navigate);
-      }),
-    [auth]
-  );
-
   useEffect(() => {
     if (auth.currentUser) {
       navigate('/profile');
     }
-  }, []);
+    return onAuthStateChanged(auth, async (_user) => {
+      await handleRedirect(navigate);
+    });
+  }, [auth]);
 
   // if (loading) {
   //   return (
